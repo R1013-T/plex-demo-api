@@ -15,19 +15,28 @@ class Api::V1::CompaniesController < ApplicationController
   def create
     company = Company.new(company_params)
     if company.save
-      render json: { status: 'success', data: company }
+      render json: { status: 'success', company: company }
     else
-      render json: { status: 'error', data: company.errors }
+      render json: { status: 'error', errors: company.errors }
     end
 
   end
 
   def update
+    if @company.update(company_params)
+      render json: { status: 'success', company: @company }
+    else
+      render json: { status: 'error', errors: @company.errors }
+    end
 
   end
 
   def destroy
-
+    if @company.destroy
+      render json: { status: 'success', company: @company }
+    else
+      render json: { status: 'error', errors: @company.errors }
+    end
   end
 
   private
