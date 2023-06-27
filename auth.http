@@ -1,0 +1,28 @@
+POST http://localhost:3001/api/v1/auth
+Content-Type: application/json
+
+{
+    "name": "test",
+    "email": "user2@example.com",
+    "password": "password",
+    "password_confirmation": "password",
+    "role": "engineer",
+    "permission": "editor"
+}
+
+###
+
+POST http://localhost:3001/api/v1/auth/sign_in
+Content-Type: application/json
+
+{
+    "email": "user2@example.com",
+    "password": "password"
+}
+
+###
+
+DELETE http://localhost:3001/api/v1/auth/sign_out
+access-token: Xe1ZIyTDu5RAEBRYvu5Xtg
+client: hODb9KgryQMS3GVCCtyDAA
+uid: user2@example.com

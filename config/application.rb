@@ -15,6 +15,11 @@ module App
 
     config.active_record.default_timezone = :utc
 
+    # https://qiita.com/KazuyaInoue/items/2d4065ddf2237c66dfd4
+    config.session_store :cookie_store, key: '_interslice_session'
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use config.session_store, config.session_options
+
     config.api_only = true
   end
 end

@@ -1,0 +1,35 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: 1
+  listing_status: false
+  name: MyString
+  name_kana: MyString
+  postal_code: MyString
+  address: MyString
+  representative_name: MyString
+  representative_name_kana: MyString
+  phone: MyString
+  revenue_2022: 1
+  profit_2022: 1
+  revenue_2021: 1
+  profit_2021: 1
+  revenue_2020: 1
+  profit_2020: 1
+
+two:
+  code: 1
+  listing_status: false
+  name: MyString
+  name_kana: MyString
+  postal_code: MyString
+  address: MyString
+  representative_name: MyString
+  representative_name_kana: MyString
+  phone: MyString
+  revenue_2022: 1
+  profit_2022: 1
+  revenue_2021: 1
+  profit_2021: 1
+  revenue_2020: 1
+  profit_2020: 1
