@@ -9,10 +9,16 @@ class Api::V1::CompaniesController < ApplicationController
   end
 
   def show
-
+    render json: { company: @company}
   end
 
   def create
+    company = Company.new(company_params)
+    if company.save
+      render json: { status: 'success', data: company }
+    else
+      render json: { status: 'error', data: company.errors }
+    end
 
   end
 

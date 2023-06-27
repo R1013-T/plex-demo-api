@@ -1,3 +1,29 @@
 GET http://localhost:3001/api/v1/companies
 
 ###
+
+POST http://localhost:3001/api/v1/companies
+Content-Type: application/json
+
+{
+    "code": 3,
+    "listing_status": true,
+    "name": "カンパニー",
+    "name_kana": "",
+    "postal_code": "000-0000",
+    "address": "",
+    "representative_name": "ナマエ",
+    "representative_name_kana": "",
+    "phone": "000-0000-000",
+    "revenue_2022": 0,
+    "profit_2022": 10,
+    "revenue_2021": 20,
+    "profit_2021": 30,
+    "revenue_2020": 40,
+    "profit_2020": 50
+}
+
+###
+
+GET http://localhost:3001/api/v1/companies/1
+
