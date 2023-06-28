@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       end
 
       resources :companies
+      resources :notes
 
     end
   end

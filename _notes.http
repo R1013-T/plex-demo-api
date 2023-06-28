@@ -1,0 +1,31 @@
+GET  http://localhost:3001/api/v1/notes
+
+###
+
+POST http://localhost:3001/api/v1/notes
+Content-Type: application/json
+
+{
+    "title": "Note 1",
+    "content": "Content 1"
+}
+
+###
+
+GET  http://localhost:3001/api/v1/notes/1
+
+###
+
+PUT  http://localhost:3001/api/v1/notes/1
+Content-Type: application/json
+
+{
+    "title": "Note 1",
+    "content": "Content 1"
+}
+
+###
+
+DELETE  http://localhost:3001/api/v1/notes/2
+
+```
