@@ -1,18 +1,20 @@
 class Api::V1::NotesController < ApplicationController
+  before_action :authenticate_api_v1_user!
   before_action :set_note, only: [:show, :update, :destroy]
-
   def index
     notes = Note.order(created_at: :desc)
+    authorize notes
     render json: { notes: notes }
   end
 
   def show
+    authorize @note
     render json: { note: @note }
   end
 
   def create
-    # note = Note.new(note_params)
-    note = current_v1_user.notes.new(note_params)
+    authorize Note
+    note = Note.new(note_params)
     if note.save
       render json: { status: 'success', note: note }
     else
@@ -21,6 +23,7 @@ class Api::V1::NotesController < ApplicationController
   end
 
   def update
+    authorize @note
     if @note.update(note_params)
       render json: { status: 'success', note: @note }
     else
@@ -29,6 +32,7 @@ class Api::V1::NotesController < ApplicationController
   end
 
   def destroy
+    authorize @note
     if @note.destroy
       render json: { status: 'success', note: @note }
     else
@@ -43,6 +47,6 @@ class Api::V1::NotesController < ApplicationController
   end
 
   def note_params
-    params.permit(:title, :content)
+    params.permit(:title, :content, :user_id, :company_id)
   end
 end

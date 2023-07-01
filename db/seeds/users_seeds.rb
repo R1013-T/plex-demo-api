@@ -8,4 +8,12 @@ unless User.exists?
       role: "other",
     )
   end
+  User.create!(
+    name: "admin",
+    email: "admin@example.com",
+    password: "password",
+    password_confirmation: "password",
+    role: "manager",
+    permission: "admin",
+  )
 end
