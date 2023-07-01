@@ -1,5 +1,5 @@
 unless Company.exists?
-  20.times do |n|
+  10.times do |n|
     Company.create!(
       code: "#{n}",
       listing_status: false,

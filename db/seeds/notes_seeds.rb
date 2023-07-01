@@ -1,8 +1,9 @@
 unless Note.exists?
-  20.times do |n|
-    Note.create!(
-      title: "title#{n}",
-      content: "content#{n}"
-    )
+  users = User.all
+  users.each do |user|
+    Random.rand(0..3).times do
+      user.notes.create!(title: "title", content: "content", company_id: Random.rand(1..5))
+    end
   end
 end
+

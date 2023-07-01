@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :validatable
   include DeviseTokenAuth::Concerns::User
 
+  has_many :notes
+
   enum role: { other: 0, sales: 1, designer: 2, engineer: 3, manager: 4 }
   enum permission: { guest: 0, viewer: 1, editor: 2, admin: 3 }
 

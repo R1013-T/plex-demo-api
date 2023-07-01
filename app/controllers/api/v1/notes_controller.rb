@@ -11,7 +11,8 @@ class Api::V1::NotesController < ApplicationController
   end
 
   def create
-    note = Note.new(note_params)
+    # note = Note.new(note_params)
+    note = current_v1_user.notes.new(note_params)
     if note.save
       render json: { status: 'success', note: note }
     else
