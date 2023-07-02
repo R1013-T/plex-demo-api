@@ -3,10 +3,6 @@ class ApplicationPolicy
   def initialize(user, record)
     @user = user
     @record = record
-
-    puts "user: #{user}"
-    puts "record: #{record}"
-
   end
 
   def index?
@@ -29,6 +25,10 @@ class ApplicationPolicy
     false
   end
 
+  def search?
+    false
+  end
+
   def edit?
     update?
   end
@@ -36,6 +36,7 @@ class ApplicationPolicy
   def destroy?
     false
   end
+
   def viewer?
     @user.viewer?
   end

@@ -11,8 +11,23 @@ Rails.application.routes.draw do
         resources :sessions, only: %i[index]
       end
 
-      resources :companies
-      resources :notes
+      resources :users do
+        collection do
+          get 'search'
+        end
+      end
+
+      resources :notes do
+        collection do
+          get 'search'
+        end
+      end
+
+      resources :companies do
+        collection do
+          get 'search'
+        end
+      end
 
     end
   end

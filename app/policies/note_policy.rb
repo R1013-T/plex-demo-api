@@ -19,6 +19,10 @@ class NotePolicy < ApplicationPolicy
     admin?
   end
 
+  def search?
+    viewer? || editor? || admin?
+  end
+
   #
   # scope
   #
