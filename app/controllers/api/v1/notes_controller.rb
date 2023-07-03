@@ -44,28 +44,17 @@ class Api::V1::NotesController < ApplicationController
   def search
     authorize Note
 
-    def search_notes(id, title, content, user_id, company_id, created_at, updated_at, m, o)
-      if m == 'and'
-        if o == 'eq'
-          puts "title: #{title}"
-          puts "title_eq: #{Note.ransack(title_eq: title)}"
-          @q = Note.ransack(id_eq: id, title_eq: title, content_eq: content, user_id_eq: user_id, company_id_eq: company_id, created_at_eq: created_at, updated_at_eq: updated_at)
-        elsif o == 'like'
-          @q = Note.ransack(id_cont: id, title_cont: title, content_cont: content, user_id_cont: user_id, company_id_cont: company_id, created_at_cont: created_at, updated_at_cont: updated_at)
-        end
-        @notes = @q.result(distinct: true)
-      else
-        if o == 'eq'
-          @q = Note.ransack(id_eq: id).or(Note.ransack(title_eq: title)).or(Note.ransack(content_eq: content)).or(Note.ransack(user_id_eq: user_id)).or(Note.ransack(company_id_eq: company_id)).or(Note.ransack(created_at_eq: created_at)).or(Note.ransack(updated_at_eq: updated_at))
-        elsif o == 'like'
-          @q = Note.ransack(id_eq: id).or(Note.ransack(title_cont: title)).or(Note.ransack(content_cont: content)).or(Note.ransack(user_id_cont: user_id)).or(Note.ransack(company_id_cont: company_id)).or(Note.ransack(created_at_cont: created_at)).or(Note.ransack(updated_at_cont: updated_at))
-        end
-        @notes = @q
-      end
-      @notes
-    end
+    match_type = params[:q][:match] || 'and'
+    search_params = params[:q][:queries]
 
-    @notes = search_notes(params[:id], params[:title], params[:content], params[:user_id], params[:company_id], params[:created_at], params[:updated_at], params[:m], params[:o])
+    puts params[:q]
+
+    if match_type == 'and'
+      @notes = Note.ransack(search_params).result(distinct: true)
+    else
+      search_hash = Hash[search_params.keys.zip(search_params.values)]
+      @notes = Note.ransack(search_hash.merge(m: 'or')).result(distinct: true)
+    end
 
     render json: { notes: @notes }
   end

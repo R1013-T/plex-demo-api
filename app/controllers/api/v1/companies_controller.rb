@@ -1,17 +1,16 @@
 class Api::V1::CompaniesController < ApplicationController
   before_action :authenticate_api_v1_user!, except: %i[index show]
-  # before_action => コントローラの全てのアクションが実行される前に処理を行う
-  before_action :set_post, only: [:show, :update, :destroy]
+  before_action :set_company, only: [:show, :update, :destroy]
 
   def index
     companies = Company.order(created_at: :desc)
     authorize companies
-    render json: { companies: companies}
+    render json: { companies: companies }
   end
 
   def show
     authorize @company
-    render json: { company: @company}
+    render json: { company: @company }
   end
 
   def create
@@ -44,9 +43,29 @@ class Api::V1::CompaniesController < ApplicationController
     end
   end
 
+  def search
+    authorize Company
+
+    match_type = params[:q][:match] || 'and'
+    search_params = params[:q][:queries]
+
+    puts params[:q]
+
+    if match_type == 'and'
+      @company = Company.ransack(search_params).result(distinct: true)
+    else
+      # or検索
+      search_hash = Hash[search_params.keys.zip(search_params.values)]
+      @company = Company.ransack(search_hash.merge(m: 'or')).result(distinct: true)
+    end
+
+    render json: { company: @company }
+
+  end
+
   private
 
-  def set_post
+  def set_company
     @company = Company.find(params[:id])
   end
 
