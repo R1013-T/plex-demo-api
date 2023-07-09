@@ -1,13 +1,4 @@
 unless User.exists?
-  10.times do |n|
-    User.create!(
-      name: "user#{n}",
-      email: "user#{n}@example.com",
-      password: "password",
-      password_confirmation: "password",
-      role: "other",
-    )
-  end
   User.create!(
     name: "admin",
     email: "admin@example.com",
@@ -32,4 +23,12 @@ unless User.exists?
     role: "designer",
     permission: "viewer",
   )
+  User.create!(
+    name: "guest",
+    email: "guest@example.com",
+    password: "password",
+    password_confirmation: "password",
+    role: "other",
+    permission: "guest",
+    )
 end
