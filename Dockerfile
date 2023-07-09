@@ -14,7 +14,7 @@ COPY Gemfile* ./
 
 RUN apk update && \
     apk upgrade && \
-    RUN apk add --no-cache bash && \
+    apk add --no-cache bash && \
     apk add --no-cache gcompat && \
     apk add --no-cache ${RUNTIME_PACKAGES} && \
     apk add --virtual build-dependencies --no-cache ${DEV_PACKAGES} && \
