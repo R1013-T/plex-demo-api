@@ -5,12 +5,12 @@ class Api::V1::CompaniesController < ApplicationController
   def index
     companies = Company.order(created_at: :desc)
     authorize companies
-    render json: { companies: companies }
+    render json: { data: companies }
   end
 
   def show
     authorize @company
-    render json: { company: @company }
+    render json: { company: @company , notes: @company.notes }
   end
 
   def create
@@ -59,7 +59,7 @@ class Api::V1::CompaniesController < ApplicationController
       @company = Company.ransack(search_hash.merge(m: 'or')).result(distinct: true)
     end
 
-    render json: { company: @company }
+    render json: { data: @company }
 
   end
 

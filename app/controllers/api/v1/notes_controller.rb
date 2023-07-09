@@ -5,19 +5,19 @@ class Api::V1::NotesController < ApplicationController
   def index
     notes = Note.order(created_at: :desc)
     authorize notes
-    render json: { notes: notes }
+    render json: { data: notes }
   end
 
   def show
     authorize @note
-    render json: { note: @note }
+    render json: { data: @note }
   end
 
   def create
     authorize Note
     note = Note.new(note_params)
     if note.save
-      render json: { status: 'success', note: note }
+      render json: { status: 'success', data: note }
     else
       render json: { status: 'error', errors: note.errors }
     end
@@ -26,7 +26,7 @@ class Api::V1::NotesController < ApplicationController
   def update
     authorize @note
     if @note.update(note_params)
-      render json: { status: 'success', note: @note }
+      render json: { status: 'success', data: @note }
     else
       render json: { status: 'error', errors: @note.errors }
     end
@@ -35,7 +35,7 @@ class Api::V1::NotesController < ApplicationController
   def destroy
     authorize @note
     if @note.destroy
-      render json: { status: 'success', note: @note }
+      render json: { status: 'success', data: @note }
     else
       render json: { status: 'error', errors: @note.errors }
     end

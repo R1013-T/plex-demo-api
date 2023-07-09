@@ -1,11 +1,11 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :authenticate_api_v1_user!
-  before_action :set_user, only: %i[show, update, destroy]
+  # before_action :authenticate_api_v1_user!, except: %i[index show]
+  around_action :set_target_user, only: %i[show update destroy]
 
   def index
     users = User.order(created_at: :desc)
     authorize users
-    render json: users
+    render json: { data: users }
   end
 
   def show
@@ -17,18 +17,18 @@ class Api::V1::UsersController < ApplicationController
     user = User.new(user_params)
     authorize user
     if user.save
-      render json: user
+      render json: { data: user }
     else
       render json: { errors: user.errors }
     end
   end
 
   def update
-    authorize @user
-    if @user.update(user_params)
-      render json: @user
+    authorize @target_user
+    if @target_user.update(user_params)
+      render json: { data: @target_user }
     else
-      render json: { errors: @user.errors }
+      render json: { errors: @target_user.errors }
     end
   end
 
@@ -40,16 +40,18 @@ class Api::V1::UsersController < ApplicationController
 
   private
 
-  def set_user
-    @user = User.find(params[:id])
+  def set_target_user
+    puts "Before set_target_user"
+    @target_user = User.find_by(id: params[:id])
+    yield
+    puts "After set_target_user"
   end
 
   def user_params
-    if @user.admin?
-      params.permit(:name, :email, :password, :role, :permission)
+    if current_api_v1_user.admin?
+      params.permit(:id, :name, :email, :password, :role, :permission)
     else
-      params.permit(:name, :email, :password, :role)
+      params.permit(:id, :name, :email, :password, :role)
     end
   end
-
 end

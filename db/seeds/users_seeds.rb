@@ -16,4 +16,20 @@ unless User.exists?
     role: "manager",
     permission: "admin",
   )
+  User.create!(
+    name: "editor",
+    email: "editor@example.com",
+    password: "password",
+    password_confirmation: "password",
+    role: "engineer",
+    permission: "editor",
+  )
+  User.create!(
+    name: "viewer",
+    email: "viewer@example.com",
+    password: "password",
+    password_confirmation: "password",
+    role: "designer",
+    permission: "viewer",
+  )
 end
